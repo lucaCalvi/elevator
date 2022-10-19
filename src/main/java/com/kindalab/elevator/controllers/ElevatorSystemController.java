@@ -3,6 +3,8 @@ package com.kindalab.elevator.controllers;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.kindalab.elevator.models.Building;
 import com.kindalab.elevator.models.Elevator;
@@ -16,9 +18,13 @@ public class ElevatorSystemController {
 	
 	private Building building;
 	
+	private Map<Long, Thread> threads;
+	
 	public ElevatorSystemController(ElevatorSystemPanel elevatorSystemPanel, Building building) {
 		this.elevatorSystemPanel = elevatorSystemPanel;
 		this.building = building;
+		
+		this.threads = new HashMap<Long, Thread>();
 		
 		this.elevatorSystemPanel.addElevatorActionListener(new ElevatorActionListener());
 	}
@@ -31,11 +37,16 @@ public class ElevatorSystemController {
 					!((ElevatorKCSystem) elevator).getKeycardSystem().isAccessToNextCallAllowed())) {
 				elevator.addDestFloorToQueue(destFloor);
 				
-				if(elevator.isIdle()) {
-					new Thread(() -> startElevator(elevator)).start();
+				Thread elevatorThread = this.threads.get(elevator.getId());
+				if(elevatorThread == null || !elevatorThread.isAlive()) {
+					Thread thread = new Thread(() -> startElevator(elevator));
+					thread.start();
+					
+					this.threads.put(elevator.getId(), thread);
 				}
 				
-				((ElevatorKCSystem) elevator).getKeycardSystem().setAccessToNextCallAllowed(false);
+				if(elevator instanceof ElevatorKCSystem)
+					((ElevatorKCSystem) elevator).getKeycardSystem().setAccessToNextCallAllowed(false);
 			}
 		}
 	}
