@@ -57,7 +57,7 @@ public class ElevatorSystemController {
 		System.out.println(elevator.getDescription() + " -> New Thread");
 		elevator.setIdle(false);
 		
-		if(elevator.getMaxWeight().compareTo(elevator.getCurrentWeight()) <= 0) {
+		if(elevator.getMaxWeight().compareTo(elevator.getCurrentWeight()) < 0) {
 			System.out.println(elevator.getDescription() + " -> Shutt Off");
 			elevator.shutOff();
 		} else {
@@ -94,7 +94,7 @@ public class ElevatorSystemController {
 			
 			elevator.setIdle(false);
 			
-			if(elevator.getMaxWeight().compareTo(elevator.getCurrentWeight()) <= 0) {
+			if(elevator.getMaxWeight().compareTo(elevator.getCurrentWeight()) < 0) {
 				System.out.println(elevator.getDescription() + " -> Shutt Off");
 				elevator.shutOff();
 			} else {
