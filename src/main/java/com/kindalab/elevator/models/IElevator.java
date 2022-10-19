@@ -6,8 +6,14 @@ public interface IElevator {
 	
 	public void goDown();
 	
+	public void waitInFloor();
+	
 	public void shutOff();
 	
-	public void turnOn();
+	public void addDestFloorToQueue(Integer destFloor);
+	
+	public void removeFirstDestFloorFromQueue();
+	
+	public Integer getFirstDestFloorFromQueue();
 
 }

@@ -18,8 +18,8 @@ public class ElevatorSystemPanel extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
 	private JPanel principalPanel;
-	private JTextField txtEnterKeycard;
-	private JButton btnEnterKeycard, btnCallElevator;
+	private JTextField txtKeycard;
+	private JButton btnEnterKeycard, btnCallElevator, btnTurnOffAlarm, btnChangeWeight;
 	private JLabel lblCurrentFloorValue, lblAlarmStatusValue, lblElevatorStatusValue;
 	private JComboBox<String> cmbSelectElevator, cmbSelectFloor;
 	private JTextField txtWeight;
@@ -52,8 +52,8 @@ public class ElevatorSystemPanel extends JFrame {
 		this.lblElevatorStatusValue = lblElevatorStatusValue;
 	}
 
-	public JTextField getTxtEnterKeycard() {
-		return txtEnterKeycard;
+	public JTextField getTxtKeycard() {
+		return txtKeycard;
 	}
 
 	public JComboBox<String> getCmbSelectElevator() {
@@ -72,6 +72,14 @@ public class ElevatorSystemPanel extends JFrame {
 		return btnCallElevator;
 	}
 	
+	public JButton getBtnTurnOffAlarm() {
+		return btnTurnOffAlarm;
+	}
+
+	public JButton getBtnChangeWeight() {
+		return btnChangeWeight;
+	}
+
 	public void addElevatorActionListener(ElevatorActionListener elevatorActionListener) {
 		btnCallElevator.addActionListener(elevatorActionListener);
 		btnEnterKeycard.addActionListener(elevatorActionListener);
@@ -140,14 +148,14 @@ public class ElevatorSystemPanel extends JFrame {
 		btnCallElevator.setBounds(355, 422, 153, 23);
 		principalPanel.add(btnCallElevator);
 		
-		txtEnterKeycard = new JTextField();
-		txtEnterKeycard.setFont(new Font("Arial", Font.PLAIN, 12));
-		txtEnterKeycard.setBounds(355, 363, 158, 31);
-		principalPanel.add(txtEnterKeycard);
-		txtEnterKeycard.setColumns(10);
+		txtKeycard = new JTextField();
+		txtKeycard.setFont(new Font("Arial", Font.PLAIN, 12));
+		txtKeycard.setBounds(355, 363, 158, 31);
+		principalPanel.add(txtKeycard);
+		txtKeycard.setColumns(10);
 		
 		JLabel lblEnterKeycard = new JLabel("Enter keycard");
-		lblEnterKeycard.setLabelFor(txtEnterKeycard);
+		lblEnterKeycard.setLabelFor(txtKeycard);
 		lblEnterKeycard.setFont(new Font("Arial", Font.PLAIN, 12));
 		lblEnterKeycard.setHorizontalAlignment(SwingConstants.CENTER);
 		lblEnterKeycard.setBounds(192, 359, 153, 39);
@@ -194,15 +202,25 @@ public class ElevatorSystemPanel extends JFrame {
 		JLabel lblWeight = new JLabel("Enter weight:");
 		lblWeight.setHorizontalAlignment(SwingConstants.CENTER);
 		lblWeight.setFont(new Font("Arial", Font.PLAIN, 12));
-		lblWeight.setBounds(258, 263, 172, 39);
+		lblWeight.setBounds(258, 253, 172, 39);
 		principalPanel.add(lblWeight);
 		
 		txtWeight = new JTextField();
 		lblWeight.setLabelFor(txtWeight);
 		txtWeight.setFont(new Font("Arial", Font.PLAIN, 12));
 		txtWeight.setColumns(10);
-		txtWeight.setBounds(418, 271, 158, 31);
+		txtWeight.setBounds(440, 261, 136, 31);
 		txtWeight.setText("0");
 		principalPanel.add(txtWeight);
+		
+		btnTurnOffAlarm = new JButton("Turn off Alarm");
+		btnTurnOffAlarm.setFont(new Font("Arial", Font.PLAIN, 12));
+		btnTurnOffAlarm.setBounds(601, 169, 118, 23);
+		principalPanel.add(btnTurnOffAlarm);
+		
+		btnChangeWeight = new JButton("Change weight");
+		btnChangeWeight.setFont(new Font("Arial", Font.PLAIN, 12));
+		btnChangeWeight.setBounds(601, 261, 118, 23);
+		principalPanel.add(btnChangeWeight);
 	}
 }
