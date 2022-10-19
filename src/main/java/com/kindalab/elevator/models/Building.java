@@ -8,14 +8,11 @@ public class Building {
 	
 	private List<Elevator> elevators;
 	
-	private Integer minFloor;
+	private List<Floor> floors;
 	
-	private Integer maxFloor;
-	
-	public Building(List<Elevator> elevators, Integer minFloor, Integer maxFloor) {
+	public Building(List<Elevator> elevators, List<Floor> floors) {
 		this.elevators = elevators;
-		this.minFloor = minFloor;
-		this.maxFloor = maxFloor;
+		this.floors = floors;
 	}
 
 	public Long getId() {
@@ -34,20 +31,12 @@ public class Building {
 		this.elevators = elevators;
 	}
 
-	public Integer getMinFloor() {
-		return minFloor;
+	public List<Floor> getFloors() {
+		return floors;
 	}
 
-	public void setMinFloor(Integer minFloor) {
-		this.minFloor = minFloor;
-	}
-
-	public Integer getMaxFloor() {
-		return maxFloor;
-	}
-
-	public void setMaxFloor(Integer maxFloor) {
-		this.maxFloor = maxFloor;
+	public void setFloors(List<Floor> floors) {
+		this.floors = floors;
 	}
 	
 	

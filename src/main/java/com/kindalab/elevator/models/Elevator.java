@@ -2,6 +2,7 @@ package com.kindalab.elevator.models;
 
 import java.math.BigDecimal;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 public class Elevator implements IElevator {
@@ -11,7 +12,9 @@ public class Elevator implements IElevator {
 	
 	private Long id;
 	
-	private Integer currentFloor;
+	private String description;
+	
+	private Floor currentFloor;
 	
 	private BigDecimal currentWeight;
 	
@@ -23,8 +26,9 @@ public class Elevator implements IElevator {
 	
 	private Queue<Integer> destFloorsQueue;
 	
-	public Elevator(Long id, Integer currentFloor, BigDecimal currentWeight, BigDecimal maxWeight) {
+	public Elevator(Long id, String description, Floor currentFloor, BigDecimal currentWeight, BigDecimal maxWeight) {
 		this.id = id;
+		this.description = description;
 		this.currentFloor = currentFloor;
 		this.currentWeight = currentWeight;
 		this.maxWeight = maxWeight;
@@ -41,11 +45,19 @@ public class Elevator implements IElevator {
 		this.id = id;
 	}
 
-	public Integer getCurrentFloor() {
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Floor getCurrentFloor() {
 		return currentFloor;
 	}
 
-	public void setCurrentFloor(Integer currentFloor) {
+	public void setCurrentFloor(Floor currentFloor) {
 		this.currentFloor = currentFloor;
 	}
 
@@ -82,23 +94,23 @@ public class Elevator implements IElevator {
 	}
 
 	@Override
-	public void goUp() {
+	public void goUp(List<Floor> floors) {
 		try {
 			Thread.sleep(TIME_BETWEEN_FLOORS);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		this.currentFloor++;
+		this.currentFloor = floors.get(floors.indexOf(this.currentFloor) + 1);
 	}
 
 	@Override
-	public void goDown() {
+	public void goDown(List<Floor> floors) {
 		try {
 			Thread.sleep(TIME_BETWEEN_FLOORS);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		this.currentFloor--;
+		this.currentFloor = floors.get(floors.indexOf(this.currentFloor) - 1);
 	}
 	
 	@Override

@@ -6,8 +6,8 @@ public class ElevatorKCSystem extends Elevator {
 	
 	public KeycardSystem keycardSystem;
 	
-	public ElevatorKCSystem(Long id, Integer currentFloor, BigDecimal currentWeight, BigDecimal maxWeight, KeycardSystem keycardSystem) {
-		super(id, currentFloor, currentWeight, maxWeight);
+	public ElevatorKCSystem(Long id, String description, Floor currentFloor, BigDecimal currentWeight, BigDecimal maxWeight, KeycardSystem keycardSystem) {
+		super(id, description, currentFloor, currentWeight, maxWeight);
 		this.keycardSystem = keycardSystem;
 	}
 
