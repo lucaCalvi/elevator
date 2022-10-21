@@ -1,4 +1,4 @@
-package com.kindalab.elevator.controllers;
+package com.kindalab.elevator.models;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -12,11 +12,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.kindalab.elevator.models.Elevator;
-import com.kindalab.elevator.models.ElevatorKCSystem;
-import com.kindalab.elevator.models.Floor;
-import com.kindalab.elevator.models.KeycardSystem;
-
 public class ElevatorTest {
 	
 	private static ElevatorKCSystem publicElevator;
@@ -28,7 +23,7 @@ public class ElevatorTest {
 	@BeforeAll
     static void setup() {
 		System.out.println("Setup");
-		KeycardSystem keycardSystem = new KeycardSystem(Arrays.asList(-1, 50), Arrays.asList("1234", "4312", "5678", "8765", "1111"));
+		KeycardSystem keycardSystem = new KeycardSystem(Long.valueOf(0), Arrays.asList(-1, 50), Arrays.asList("1234", "4312", "5678", "8765", "1111"));
 		
 		floors = new ArrayList<>();
 		int floorNumber = -1;
@@ -42,14 +37,14 @@ public class ElevatorTest {
 				.findFirst()
 				.orElse(null);
 		
-		publicElevator = new ElevatorKCSystem(Long.valueOf(0), "Public elevator", initFloor, BigDecimal.valueOf(0), BigDecimal.valueOf(1000), keycardSystem);
+		publicElevator = new ElevatorKCSystem(Long.valueOf(0), "Public elevator", initFloor, new BigDecimal(0), new BigDecimal(1000), keycardSystem);
     }
 	
 	@BeforeEach
     void resetValues() {
 		System.out.println("Reset values");
 		publicElevator.setCurrentFloor(initFloor);
-		publicElevator.setCurrentWeight(BigDecimal.valueOf(0));
+		publicElevator.setCurrentWeight(new BigDecimal(0));
 		publicElevator.setIdle(true);
 		publicElevator.setAlarmOn(false);
 		publicElevator.setDestFloorsQueue(new LinkedList<>());

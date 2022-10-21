@@ -10,7 +10,8 @@ public class Building {
 	
 	private List<Floor> floors;
 	
-	public Building(List<Elevator> elevators, List<Floor> floors) {
+	public Building(Long id, List<Elevator> elevators, List<Floor> floors) {
+		this.id = id;
 		this.elevators = elevators;
 		this.floors = floors;
 	}

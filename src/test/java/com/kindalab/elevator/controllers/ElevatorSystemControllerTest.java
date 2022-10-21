@@ -12,14 +12,14 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.kindalab.elevator.gui.ComboItem;
+import com.kindalab.elevator.gui.ElevatorSystemPanel;
 import com.kindalab.elevator.models.Building;
 import com.kindalab.elevator.models.Elevator;
 import com.kindalab.elevator.models.ElevatorKCSystem;
 import com.kindalab.elevator.models.Floor;
 import com.kindalab.elevator.models.Keycard;
 import com.kindalab.elevator.models.KeycardSystem;
-import com.kindalab.elevator.view.ComboItem;
-import com.kindalab.elevator.view.ElevatorSystemPanel;
 
 public class ElevatorSystemControllerTest {
 	
@@ -40,7 +40,7 @@ public class ElevatorSystemControllerTest {
 	@BeforeAll
     static void setup() {
 		System.out.println("Setup");
-		KeycardSystem keycardSystem = new KeycardSystem(Arrays.asList(-1, 50), Arrays.asList("1234", "4312", "5678", "8765", "1111"));
+		KeycardSystem keycardSystem = new KeycardSystem(Long.valueOf(0), Arrays.asList(-1, 50), Arrays.asList("1234", "4312", "5678", "8765", "1111"));
 		
 		List<Floor> floors = new ArrayList<>();
 		int floorNumber = -1;
@@ -54,10 +54,10 @@ public class ElevatorSystemControllerTest {
 				.findFirst()
 				.orElse(null);
 		
-		publicElevator = new ElevatorKCSystem(Long.valueOf(0), "Public elevator", initFloor, BigDecimal.valueOf(0), BigDecimal.valueOf(1000), keycardSystem);
-		freightElevator = new Elevator(Long.valueOf(1), "Freight elevator", initFloor, BigDecimal.valueOf(0), BigDecimal.valueOf(3000));
+		publicElevator = new ElevatorKCSystem(Long.valueOf(0), "Public elevator", initFloor, new BigDecimal(0), new BigDecimal(1000), keycardSystem);
+		freightElevator = new Elevator(Long.valueOf(1), "Freight elevator", initFloor, new BigDecimal(0), new BigDecimal(3000));
 		
-		Building building = new Building(Arrays.asList(publicElevator, freightElevator), floors);
+		Building building = new Building(Long.valueOf(0), Arrays.asList(publicElevator, freightElevator), floors);
 		
 		elevatorSystemPanel = new ElevatorSystemPanel();
 		
@@ -78,13 +78,13 @@ public class ElevatorSystemControllerTest {
     void resetValues() {
 		System.out.println("Reset values");
 		publicElevator.setCurrentFloor(initFloor);
-		publicElevator.setCurrentWeight(BigDecimal.valueOf(0));
+		publicElevator.setCurrentWeight(new BigDecimal(0));
 		publicElevator.setIdle(true);
 		publicElevator.setAlarmOn(false);
 		publicElevator.setDestFloorsQueue(new LinkedList<>());
 		
 		freightElevator.setCurrentFloor(initFloor);
-		freightElevator.setCurrentWeight(BigDecimal.valueOf(0));
+		freightElevator.setCurrentWeight(new BigDecimal(0));
 		freightElevator.setIdle(true);
 		freightElevator.setAlarmOn(false);
 		freightElevator.setDestFloorsQueue(new LinkedList<>());
@@ -93,6 +93,43 @@ public class ElevatorSystemControllerTest {
 	@Test
 	void callElevatorOnce() {
 		System.out.println("callElevatorOnce");
+		elevatorSystemController.callElevator(freightElevator, 4);
+		
+		try {
+			elevatorSystemController.getThreads().get(freightElevator.getId()).join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		assertEquals(4, freightElevator.getCurrentFloor().getNumber());
+	}
+	
+	@Test
+	void callElevatorMoreThanOnce() {
+		System.out.println("callElevatorMoreThanOnce");
+		elevatorSystemController.callElevator(freightElevator, 4);
+		
+		try {
+			elevatorSystemController.getThreads().get(freightElevator.getId()).join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		elevatorSystemController.callElevator(freightElevator, 2);
+		
+		try {
+			elevatorSystemController.getThreads().get(freightElevator.getId()).join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		assertEquals(2, freightElevator.getCurrentFloor().getNumber());
+	}
+	
+	@Test
+	void callElevatorMoreThanOnceInQueue() {
+		System.out.println("callElevatorMoreThanOnceInQueue");
+		elevatorSystemController.callElevator(freightElevator, 3);
 		elevatorSystemController.callElevator(freightElevator, 5);
 		
 		try {
@@ -102,43 +139,6 @@ public class ElevatorSystemControllerTest {
 		}
 		
 		assertEquals(5, freightElevator.getCurrentFloor().getNumber());
-	}
-	
-	@Test
-	void callElevatorMoreThanOnce() {
-		System.out.println("callElevatorMoreThanOnce");
-		elevatorSystemController.callElevator(freightElevator, 5);
-		
-		try {
-			elevatorSystemController.getThreads().get(freightElevator.getId()).join();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
-		elevatorSystemController.callElevator(freightElevator, 3);
-		
-		try {
-			elevatorSystemController.getThreads().get(freightElevator.getId()).join();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
-		assertEquals(3, freightElevator.getCurrentFloor().getNumber());
-	}
-	
-	@Test
-	void callElevatorMoreThanOnceInQueue() {
-		System.out.println("callElevatorMoreThanOnceInQueue");
-		elevatorSystemController.callElevator(freightElevator, 5);
-		elevatorSystemController.callElevator(freightElevator, 7);
-		
-		try {
-			elevatorSystemController.getThreads().get(freightElevator.getId()).join();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
-		assertEquals(7, freightElevator.getCurrentFloor().getNumber());
 	}
 	
 	@Test
@@ -230,13 +230,13 @@ public class ElevatorSystemControllerTest {
 		
 		elevatorSystemPanel.getBtnChangeWeight().doClick();
 		
-		assertEquals(BigDecimal.valueOf(Double.valueOf("5000")), freightElevator.getCurrentWeight());
+		assertEquals(new BigDecimal(5000), freightElevator.getCurrentWeight());
 	}
 	
 	@Test
 	void callElevatorWithWeightGreaterThanMaximum() {
 		System.out.println("callElevatorWithWeightGreaterThanMaximum");
-		freightElevator.setCurrentWeight(BigDecimal.valueOf(6000));
+		freightElevator.setCurrentWeight(new BigDecimal(6000));
 		
 		elevatorSystemController.callElevator(freightElevator, 5);
 		
@@ -253,7 +253,7 @@ public class ElevatorSystemControllerTest {
 	@Test
 	void callElevatorWithLessThanMaximumWeight() {
 		System.out.println("callElevatorWithLessThanMaximumWeight");
-		freightElevator.setCurrentWeight(BigDecimal.valueOf(1000));
+		freightElevator.setCurrentWeight(new BigDecimal(1000));
 		
 		elevatorSystemController.callElevator(freightElevator, 3);
 		

@@ -6,7 +6,8 @@ public class Keycard {
 	
 	private String code;
 	
-	public Keycard(String code) {
+	public Keycard(Long id, String code) {
+		this.id = id;
 		this.code = code;
 	}
 

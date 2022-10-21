@@ -4,16 +4,26 @@ import java.util.List;
 
 public class KeycardSystem implements IKeycardSystem {
 	
-	public KeycardSystem(List<Integer> blockedFloors, List<String> keycardSystemValidCodes) {
-		this.blockedFloors = blockedFloors;
-		this.keycardSystemValidCodes = keycardSystemValidCodes;
-	}
+	private Long id;
 	
 	private List<Integer> blockedFloors;
 	
 	private List<String> keycardSystemValidCodes;
 	
 	private boolean accessToNextCallAllowed;
+	
+	public KeycardSystem(Long id, List<Integer> blockedFloors, List<String> keycardSystemValidCodes) {
+		this.blockedFloors = blockedFloors;
+		this.keycardSystemValidCodes = keycardSystemValidCodes;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public List<Integer> getBlockedFloors() {
 		return blockedFloors;

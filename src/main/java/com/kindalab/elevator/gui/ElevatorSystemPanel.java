@@ -1,4 +1,4 @@
-package com.kindalab.elevator.view;
+package com.kindalab.elevator.gui;
 
 import java.awt.Font;
 
@@ -21,9 +21,9 @@ public class ElevatorSystemPanel extends JFrame {
 	private JPanel principalPanel;
 	private JTextField txtKeycard;
 	private JButton btnEnterKeycard, btnCallElevator, btnTurnOffAlarm, btnChangeWeight;
-	private JComboBox<String> cmbSelectElevator, cmbSelectFloor;
+	private JComboBox<ComboItem> cmbSelectElevator, cmbSelectFloor;
 	private JTextField txtWeight;
-	private DefaultComboBoxModel dcbmElevator, dcbmFloor;
+	private DefaultComboBoxModel<ComboItem> dcbmElevator, dcbmFloor;
 
 	public JTextField getTxtWeight() {
 		return txtWeight;
@@ -33,11 +33,11 @@ public class ElevatorSystemPanel extends JFrame {
 		return txtKeycard;
 	}
 
-	public JComboBox<String> getCmbSelectElevator() {
+	public JComboBox<ComboItem> getCmbSelectElevator() {
 		return cmbSelectElevator;
 	}
 
-	public JComboBox<String> getCmbSelectFloor() {
+	public JComboBox<ComboItem> getCmbSelectFloor() {
 		return cmbSelectFloor;
 	}
 
@@ -57,11 +57,11 @@ public class ElevatorSystemPanel extends JFrame {
 		return btnChangeWeight;
 	}
 
-	public DefaultComboBoxModel getDcbmElevator() {
+	public DefaultComboBoxModel<ComboItem> getDcbmElevator() {
 		return dcbmElevator;
 	}
 
-	public DefaultComboBoxModel getDcbmFloor() {
+	public DefaultComboBoxModel<ComboItem> getDcbmFloor() {
 		return dcbmFloor;
 	}
 
@@ -100,11 +100,11 @@ public class ElevatorSystemPanel extends JFrame {
 		lblSelectElevator.setBounds(258, 86, 172, 39);
 		principalPanel.add(lblSelectElevator);
 		
-		cmbSelectElevator = new JComboBox();
+		cmbSelectElevator = new JComboBox<ComboItem>();
 		cmbSelectElevator.setFont(new Font("Arial", Font.PLAIN, 12));
 		lblSelectElevator.setLabelFor(cmbSelectElevator);
 		cmbSelectElevator.setBounds(440, 94, 136, 22);
-		dcbmElevator = new DefaultComboBoxModel();
+		dcbmElevator = new DefaultComboBoxModel<ComboItem>();
 		principalPanel.add(cmbSelectElevator);
 		
 		JLabel lblSelectFloor = new JLabel("Select floor");
@@ -113,11 +113,11 @@ public class ElevatorSystemPanel extends JFrame {
 		lblSelectFloor.setBounds(258, 135, 172, 39);
 		principalPanel.add(lblSelectFloor);
 		
-		cmbSelectFloor = new JComboBox();
+		cmbSelectFloor = new JComboBox<ComboItem>();
 		lblSelectFloor.setLabelFor(cmbSelectFloor);
 		cmbSelectFloor.setFont(new Font("Arial", Font.PLAIN, 12));
 		cmbSelectFloor.setBounds(440, 143, 136, 22);
-		dcbmFloor = new DefaultComboBoxModel();
+		dcbmFloor = new DefaultComboBoxModel<ComboItem>();
 		principalPanel.add(cmbSelectFloor);
 		
 		btnCallElevator = new JButton("Call elevator");
@@ -154,7 +154,6 @@ public class ElevatorSystemPanel extends JFrame {
 		txtWeight.setFont(new Font("Arial", Font.PLAIN, 12));
 		txtWeight.setColumns(10);
 		txtWeight.setBounds(372, 220, 136, 31);
-		txtWeight.setText("0");
 		principalPanel.add(txtWeight);
 		
 		btnTurnOffAlarm = new JButton("Turn off Alarm");

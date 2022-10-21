@@ -1,4 +1,4 @@
-package com.kindalab.elevator.view;
+package com.kindalab.elevator.gui;
 
 public class ComboItem {
 	

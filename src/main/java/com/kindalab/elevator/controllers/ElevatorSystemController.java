@@ -3,16 +3,17 @@ package com.kindalab.elevator.controllers;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.kindalab.elevator.gui.ComboItem;
+import com.kindalab.elevator.gui.ElevatorSystemPanel;
 import com.kindalab.elevator.models.Building;
 import com.kindalab.elevator.models.Elevator;
 import com.kindalab.elevator.models.ElevatorKCSystem;
 import com.kindalab.elevator.models.Floor;
 import com.kindalab.elevator.models.Keycard;
-import com.kindalab.elevator.view.ComboItem;
-import com.kindalab.elevator.view.ElevatorSystemPanel;
 
 public class ElevatorSystemController {
 	
@@ -28,7 +29,7 @@ public class ElevatorSystemController {
 		
 		this.threads = new HashMap<Long, Thread>();
 		
-		initComboBoxValues();
+		initValues();
 	}
 	
 	public Map<Long, Thread> getThreads() {
@@ -108,7 +109,7 @@ public class ElevatorSystemController {
 	}
 	
 	public Keycard generateKeycard(String keycardGenerationCode) {
-		return new Keycard(keycardGenerationCode);
+		return new Keycard(new Date(System.currentTimeMillis()).getTime(), keycardGenerationCode);
 	}
 	
 	public void readKeycard(Keycard keycard) {
@@ -139,7 +140,7 @@ public class ElevatorSystemController {
 		}
 	}
 	
-	private void initComboBoxValues() {
+	private void initValues() {
 		this.elevatorSystemPanel.addElevatorActionListener(new ElevatorActionListener());
 		for(Elevator e: building.getElevators()) {
 			this.elevatorSystemPanel.getDcbmElevator().addElement(new ComboItem(String.valueOf(e.getId()), e.getDescription()));
@@ -154,6 +155,7 @@ public class ElevatorSystemController {
 		
 		if(selectedElevator != null) {
 			updateComboBoxValue(selectedElevator);
+			this.elevatorSystemPanel.getTxtWeight().setText(String.valueOf(selectedElevator.getCurrentWeight()));
 		}
 	}
 
@@ -169,6 +171,7 @@ public class ElevatorSystemController {
 				Elevator elevator = getSelectedElevator();
 				if(elevator != null) {
 					updateComboBoxValue(elevator);
+					elevatorSystemPanel.getTxtWeight().setText(String.valueOf(elevator.getCurrentWeight()));
 				}
 			} else if(elevatorSystemPanel.getBtnTurnOffAlarm() == e.getSource()) {
 				Elevator elevator = getSelectedElevator();
@@ -179,8 +182,13 @@ public class ElevatorSystemController {
 			} else if(elevatorSystemPanel.getBtnChangeWeight() == e.getSource()) {
 				Elevator elevator = getSelectedElevator();
 				if(elevator != null && elevator.isIdle()) {
-					elevator.setCurrentWeight(BigDecimal.valueOf(Double.valueOf(elevatorSystemPanel.getTxtWeight().getText())));
-					System.out.println(elevator.getDescription() + " -> Elevator weight changed to: " + elevator.getCurrentWeight());
+					try {
+						elevator.setCurrentWeight(new BigDecimal(elevatorSystemPanel.getTxtWeight().getText()));
+						System.out.println(elevator.getDescription() + " -> Elevator weight changed to: " + elevator.getCurrentWeight());
+					} catch(NumberFormatException ex) {
+						System.out.println("Invalid number format");
+						ex.printStackTrace();
+					}
 				}
 			}
 		}
