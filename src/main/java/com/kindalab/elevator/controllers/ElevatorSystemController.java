@@ -31,7 +31,11 @@ public class ElevatorSystemController {
 		initComboBoxValues();
 	}
 	
-	private void callElevator(Elevator elevator, Integer destFloor) {
+	public Map<Long, Thread> getThreads() {
+		return threads;
+	}
+
+	public void callElevator(Elevator elevator, Integer destFloor) {
 		System.out.println(elevator.getDescription() + " -> Calling elevator");
 		
 		if(elevator != null) {
@@ -87,12 +91,8 @@ public class ElevatorSystemController {
 		}
 		
 		if(nextDestFloor != null) {
-			elevator.setIdle(true);
-			
 			System.out.println(elevator.getDescription() + " -> Enter/leave the elevator please!!!");
 			elevator.waitInFloor();
-			
-			elevator.setIdle(false);
 			
 			if(elevator.getMaxWeight().compareTo(elevator.getCurrentWeight()) < 0) {
 				System.out.println(elevator.getDescription() + " -> Shutt Off");
@@ -107,11 +107,11 @@ public class ElevatorSystemController {
 		}
 	}
 	
-	private Keycard generateKeycard(String keycardGenerationCode) {
+	public Keycard generateKeycard(String keycardGenerationCode) {
 		return new Keycard(keycardGenerationCode);
 	}
 	
-	private void readKeycard(Keycard keycard) {
+	public void readKeycard(Keycard keycard) {
 		Elevator elevator = getSelectedElevator();
 		if(elevator instanceof ElevatorKCSystem) {
 			((ElevatorKCSystem) elevator).getKeycardSystem().readKeycard(keycard);

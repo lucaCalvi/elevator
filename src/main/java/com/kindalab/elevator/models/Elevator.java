@@ -8,7 +8,7 @@ import java.util.Queue;
 public class Elevator implements IElevator {
 	
 	public static final Integer TIME_BETWEEN_FLOORS = 2000;
-	public static final Integer TIME_BETWEEN_REQUESTS = 5000;
+	public static final Integer TIME_WAITING_FLOOR = 5000;
 	
 	private Long id;
 	
@@ -93,6 +93,14 @@ public class Elevator implements IElevator {
 		this.alarmOn = alarmOn;
 	}
 
+	public Queue<Integer> getDestFloorsQueue() {
+		return destFloorsQueue;
+	}
+
+	public void setDestFloorsQueue(Queue<Integer> destFloorsQueue) {
+		this.destFloorsQueue = destFloorsQueue;
+	}
+
 	@Override
 	public void goUp(List<Floor> floors) {
 		try {
@@ -115,11 +123,15 @@ public class Elevator implements IElevator {
 	
 	@Override
 	public void waitInFloor() {
+		this.idle = true;
+		
 		try {
-			Thread.sleep(TIME_BETWEEN_REQUESTS);
+			Thread.sleep(TIME_WAITING_FLOOR);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		
+		this.idle = false;
 	}
 
 	@Override
