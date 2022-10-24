@@ -161,6 +161,15 @@ public class ElevatorSystemController {
 		if(selectedElevator != null) {
 			updateComboBoxValue(selectedElevator);
 			this.elevatorSystemPanel.getTxtWeight().setText(String.valueOf(selectedElevator.getCurrentWeight()));
+			if(selectedElevator instanceof ElevatorKCSystem) {
+				elevatorSystemPanel.getLblEnterKeycard().setVisible(true);
+				elevatorSystemPanel.getTxtKeycard().setVisible(true);
+				elevatorSystemPanel.getBtnEnterKeycard().setVisible(true);
+			} else {
+				elevatorSystemPanel.getLblEnterKeycard().setVisible(false);
+				elevatorSystemPanel.getTxtKeycard().setVisible(false);
+				elevatorSystemPanel.getBtnEnterKeycard().setVisible(false);
+			}
 		}
 	}
 
@@ -177,6 +186,15 @@ public class ElevatorSystemController {
 				if(elevator != null) {
 					updateComboBoxValue(elevator);
 					elevatorSystemPanel.getTxtWeight().setText(String.valueOf(elevator.getCurrentWeight()));
+					if(elevator instanceof ElevatorKCSystem) {
+						elevatorSystemPanel.getLblEnterKeycard().setVisible(true);
+						elevatorSystemPanel.getTxtKeycard().setVisible(true);
+						elevatorSystemPanel.getBtnEnterKeycard().setVisible(true);
+					} else {
+						elevatorSystemPanel.getLblEnterKeycard().setVisible(false);
+						elevatorSystemPanel.getTxtKeycard().setVisible(false);
+						elevatorSystemPanel.getBtnEnterKeycard().setVisible(false);
+					}
 				}
 			} else if(elevatorSystemPanel.getBtnTurnOffAlarm() == e.getSource()) {
 				Elevator elevator = getSelectedElevator();

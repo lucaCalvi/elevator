@@ -24,6 +24,7 @@ public class ElevatorSystemPanel extends JFrame {
 	private JComboBox<ComboItem> cmbSelectElevator, cmbSelectFloor;
 	private JTextField txtWeight;
 	private DefaultComboBoxModel<ComboItem> dcbmElevator, dcbmFloor;
+	private JLabel lblEnterKeycard;
 
 	public JTextField getTxtWeight() {
 		return txtWeight;
@@ -63,6 +64,10 @@ public class ElevatorSystemPanel extends JFrame {
 
 	public DefaultComboBoxModel<ComboItem> getDcbmFloor() {
 		return dcbmFloor;
+	}
+
+	public JLabel getLblEnterKeycard() {
+		return lblEnterKeycard;
 	}
 
 	public void addElevatorActionListener(ElevatorActionListener elevatorActionListener) {
@@ -131,7 +136,7 @@ public class ElevatorSystemPanel extends JFrame {
 		principalPanel.add(txtKeycard);
 		txtKeycard.setColumns(10);
 		
-		JLabel lblEnterKeycard = new JLabel("Enter keycard");
+		lblEnterKeycard = new JLabel("Enter keycard");
 		lblEnterKeycard.setLabelFor(txtKeycard);
 		lblEnterKeycard.setFont(new Font("Arial", Font.PLAIN, 12));
 		lblEnterKeycard.setHorizontalAlignment(SwingConstants.CENTER);
