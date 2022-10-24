@@ -6,15 +6,17 @@ public class KeycardSystem implements IKeycardSystem {
 	
 	private Long id;
 	
-	private List<Integer> blockedFloors;
+	private List<Floor> blockedFloors;
 	
 	private List<String> keycardSystemValidCodes;
 	
 	private boolean accessToNextCallAllowed;
 	
-	public KeycardSystem(Long id, List<Integer> blockedFloors, List<String> keycardSystemValidCodes) {
+	public KeycardSystem(Long id, List<Floor> blockedFloors, List<String> keycardSystemValidCodes) {
+		this.id = id;
 		this.blockedFloors = blockedFloors;
 		this.keycardSystemValidCodes = keycardSystemValidCodes;
+		this.accessToNextCallAllowed = false;
 	}
 
 	public Long getId() {
@@ -25,11 +27,11 @@ public class KeycardSystem implements IKeycardSystem {
 		this.id = id;
 	}
 
-	public List<Integer> getBlockedFloors() {
+	public List<Floor> getBlockedFloors() {
 		return blockedFloors;
 	}
 
-	public void setBlockedFloors(List<Integer> blockedFloors) {
+	public void setBlockedFloors(List<Floor> blockedFloors) {
 		this.blockedFloors = blockedFloors;
 	}
 

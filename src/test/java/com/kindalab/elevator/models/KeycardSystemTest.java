@@ -21,7 +21,9 @@ public class KeycardSystemTest {
 		System.out.println("Setup");
 		keycardSystemValidCodes = Arrays.asList("1234", "4312", "5678", "8765", "1111");
 		
-		keycardSystem = new KeycardSystem(Long.valueOf(0), Arrays.asList(-1, 50), keycardSystemValidCodes);
+		List<Floor> blockedFloors = Arrays.asList(new Floor(Long.valueOf(0), -1), new Floor(Long.valueOf(1), 50));
+		
+		keycardSystem = new KeycardSystem(Long.valueOf(0), blockedFloors, keycardSystemValidCodes);
     }
 	
 	@BeforeEach

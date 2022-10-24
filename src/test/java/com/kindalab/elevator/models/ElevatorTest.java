@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,8 +24,6 @@ public class ElevatorTest {
 	@BeforeAll
     static void setup() {
 		System.out.println("Setup");
-		KeycardSystem keycardSystem = new KeycardSystem(Long.valueOf(0), Arrays.asList(-1, 50), Arrays.asList("1234", "4312", "5678", "8765", "1111"));
-		
 		floors = new ArrayList<>();
 		int floorNumber = -1;
 		for(int i = 0; i <= 51; i++) {
@@ -36,6 +35,12 @@ public class ElevatorTest {
 				.filter(f -> f.getNumber().equals(0))
 				.findFirst()
 				.orElse(null);
+		
+		List<Floor> blockedFloors = floors.stream()
+				.filter(f -> f.getNumber().equals(-1) || f.getNumber().equals(50))
+				.collect(Collectors.toList());
+		
+		KeycardSystem keycardSystem = new KeycardSystem(Long.valueOf(0), blockedFloors, Arrays.asList("1234", "4312", "5678", "8765", "1111"));
 		
 		publicElevator = new ElevatorKCSystem(Long.valueOf(0), "Public elevator", initFloor, new BigDecimal(0), new BigDecimal(1000), keycardSystem);
     }

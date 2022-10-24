@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.kindalab.elevator.gui.ComboItem;
 import com.kindalab.elevator.gui.ElevatorSystemPanel;
@@ -40,7 +41,11 @@ public class ElevatorSystemController {
 		System.out.println(elevator.getDescription() + " -> Calling elevator");
 		
 		if(elevator != null) {
-			if(!(elevator instanceof ElevatorKCSystem) || !(((ElevatorKCSystem) elevator).getKeycardSystem().getBlockedFloors().contains(destFloor) &&
+			if(!(elevator instanceof ElevatorKCSystem) || 
+					!(((ElevatorKCSystem) elevator).getKeycardSystem().getBlockedFloors().stream()
+							.map(bf -> bf.getNumber())
+							.collect(Collectors.toList())
+							.contains(destFloor) &&
 					!((ElevatorKCSystem) elevator).getKeycardSystem().isAccessToNextCallAllowed())) {
 				elevator.addDestFloorToQueue(destFloor);
 				
