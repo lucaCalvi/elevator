@@ -98,7 +98,11 @@ public class ElevatorSystemController {
 		
 		if(nextDestFloor != null) {
 			System.out.println(elevator.getDescription() + " -> Enter/leave the elevator please!!!");
+			elevator.setIdle(true);
+			
 			elevator.waitInFloor();
+			
+			elevator.setIdle(false);
 			
 			if(elevator.getMaxWeight().compareTo(elevator.getCurrentWeight()) < 0) {
 				System.out.println(elevator.getDescription() + " -> Shutt Off");

@@ -123,15 +123,11 @@ public class Elevator implements IElevator {
 	
 	@Override
 	public void waitInFloor() {
-		this.idle = true;
-		
 		try {
 			Thread.sleep(TIME_WAITING_FLOOR);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
-		this.idle = false;
 	}
 
 	@Override

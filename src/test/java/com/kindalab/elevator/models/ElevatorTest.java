@@ -60,12 +60,6 @@ public class ElevatorTest {
 		System.out.println("goUp");
 		Integer previousFloor = publicElevator.getCurrentFloor().getNumber();
 		
-		try {
-			Thread.sleep(Elevator.TIME_BETWEEN_FLOORS);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
 		publicElevator.goUp(floors);
 		
 		assertEquals(previousFloor + 1, publicElevator.getCurrentFloor().getNumber());
@@ -76,29 +70,9 @@ public class ElevatorTest {
 		System.out.println("goDown");
 		Integer previousFloor = publicElevator.getCurrentFloor().getNumber();
 		
-		try {
-			Thread.sleep(Elevator.TIME_BETWEEN_FLOORS);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
 		publicElevator.goDown(floors);
 		
 		assertEquals(previousFloor - 1, publicElevator.getCurrentFloor().getNumber());
-	}
-	
-	@Test
-	void waitInFloor() {
-		System.out.println("waitInFloor");
-		publicElevator.waitInFloor();
-		
-		try {
-			Thread.sleep(Elevator.TIME_WAITING_FLOOR);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
-		assertEquals(false, publicElevator.isIdle());
 	}
 
 	@Test
