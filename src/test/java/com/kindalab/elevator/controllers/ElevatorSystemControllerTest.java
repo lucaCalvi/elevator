@@ -245,12 +245,6 @@ public class ElevatorSystemControllerTest {
 		
 		elevatorSystemController.callElevator(freightElevator, 5);
 		
-		try {
-			elevatorSystemController.getThreads().get(freightElevator.getId()).join();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
 		assertEquals(true, freightElevator.isAlarmOn());
 		assertEquals(true, freightElevator.isIdle());
 	}

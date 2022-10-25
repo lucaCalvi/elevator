@@ -95,8 +95,8 @@ public class ElevatorTest {
 	@Test
 	void removeFirstDestFloorFromQueue() {
 		System.out.println("removeFirstDestFloorFromQueue");
-		publicElevator.addDestFloorToQueue(5);
-		publicElevator.addDestFloorToQueue(10);
+		publicElevator.getDestFloorsQueue().offer(5);
+		publicElevator.getDestFloorsQueue().offer(10);
 		publicElevator.removeFirstDestFloorFromQueue();
 		
 		assertEquals(10, publicElevator.getDestFloorsQueue().peek());
@@ -105,7 +105,7 @@ public class ElevatorTest {
 	@Test
 	void getFirstDestFloorFromQueue() {
 		System.out.println("getFirstDestFloorFromQueue");
-		publicElevator.addDestFloorToQueue(5);
+		publicElevator.getDestFloorsQueue().offer(5);
 		
 		assertEquals(5, publicElevator.getFirstDestFloorFromQueue());
 	}
